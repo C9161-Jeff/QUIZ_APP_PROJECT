@@ -38,7 +38,7 @@ class Update(models.Model):
     
     class Meta:
         abstract = True
-
+ 
 class Question(Update):
     SCALE =(
         (0, "Beginner"),
@@ -47,7 +47,7 @@ class Question(Update):
     )
     
     quiz = models.ForeignKey(Quiz, on_delete = models.CASCADE)
-    title = models.CharField(max_length=300, verbose_name="question", blank=True)
+    title = models.CharField(max_length=300, verbose_name="question")
     difficulty = models.IntegerField(choices=SCALE)
     date_created = models.DateTimeField(auto_now_add=True)
     # updated = models.DateTimeField(auto_now=True)
@@ -57,7 +57,7 @@ class Question(Update):
 
 
 class Answer(Update):
-    question = models.ForeignKey(Question, on_delete = models.CASCADE)
+    question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name ="answer")
     answer_text = models.CharField(max_length=250)
     is_right = models.BooleanField(default=False)
     # updated = models.DateTimeField(auto_now=True)    
