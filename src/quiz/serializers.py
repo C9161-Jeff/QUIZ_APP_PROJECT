@@ -10,6 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
             "quiz_count"
             )
         
+        
 class CategoryDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quiz
@@ -18,25 +19,29 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
             "question_count",
         )
 
+
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model =Answer
-        fields =(
-            "answer_text"
-            "is_right"
+        model = Answer
+        # fields = '__all__'
+        fields = (
+            "answer_text",
+            "is_right",
         )
-
-
+   
+        
 class QuestionSerializer(serializers.ModelSerializer):
+    
     answer = AnswerSerializer(many=True, read_only=True)
     difficulty = serializers.SerializerMethodField()
+    
     class Meta:
         model = Question
         fields = (
             "title",
             "answer",
-            "difficulty"
+            "difficulty",
         )
-
-def get_difficulty(self, obj):
-    return obj.get_difficullty_display()
+        
+    def get_difficulty(self, obj):
+        return obj.get_difficulty_display()
